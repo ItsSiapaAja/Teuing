@@ -5,7 +5,7 @@ You can download the executable file at Packages (with the source code too). Aft
 [1] >> -c
 [2] >> "yourfilename".teu
 ```
-The file extentions are `.teu`, for the exit command just follow you can write it too like this : 
+There are a file for example of the code. The file extentions are `.teu`, for the exit command just follow you can write it too like this : 
 ```
 [1] >> exit
 [2] >> yes
