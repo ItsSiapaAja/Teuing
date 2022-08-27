@@ -1,6 +1,6 @@
 # Teuing : Fun Programming Language
 ## Run a Program
-You can download the executable file at Packages (with the source code too). After download it, run the executable file at bin folder and just write this at the shell : 
+You can download the source code and the executable too in the Releases. After download it, run the executable file at bin folder and just write this at the shell : 
 ```
 [1] >> -c
 [2] >> "yourfilename".teu
