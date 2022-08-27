@@ -1,4 +1,4 @@
-### Teuing : Fun Programming Language
+# Teuing : Fun Programming Language
 ## Run a Program
 You can download the executable file at Packages (with the source code too). After download it, run the executable file at bin folder and just write this at the shell : 
 ```
