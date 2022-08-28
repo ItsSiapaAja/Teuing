@@ -10,9 +10,15 @@ print integer abb;
 
 add integer abb 5;
 print integer abb;
-min abb 5;
+min integer abb 5;
 print integer abb;
-mul abb 5;
+mul intger abb 5;
 print integer abb;
-div abb 5;
+div integer abb 5;
 print integer abb;
+
+new integer ngt -10;
+print integer ngt;
+
+add integer ngt 1;
+print integer ngt;

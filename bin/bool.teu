@@ -1,0 +1,8 @@
+new bool hgi true;
+printspace bool hgi;
+
+new bool jik false;
+printspace bool jik;
+
+new bool fig true;
+printspace bool fig;

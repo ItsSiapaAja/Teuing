@@ -1,9 +1,14 @@
 /*
 	Teuing Language
-	Version 0.0.1
+	Version 0.0.2a (Loop Update)
 	Since 2022
 
 	Main file, everything is start here (console), then parse the .teu file into parse.h
+
+	New Feature :
+	- New Loop Syntax [ok]
+	- Boolean type [ok]
+	- printspace keyword [ok]
 */
 
 #include <iostream>
@@ -74,7 +79,7 @@ void mainConsole()
 	bool exit;
 	system("cls");
 	system("color 1f");
-	cout << "Teuing Language\nVerison 0.0.1" << endl;
+	cout << "Teuing Language\nVerison 0.0.2a" << endl;
 	while(exit != true)
 	{
 		cout << "[1] >> ";

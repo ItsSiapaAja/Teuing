@@ -1,4 +1,6 @@
+new text inf "This is a Teuing test version 0.0.2a";
+print text inf;
+
 new text abc "Hello World";
 print text abc;
 ---------------------------------
-loop range(10 until 90) in N outSpace;

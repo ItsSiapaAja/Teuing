@@ -1,0 +1,9 @@
+new text spc " ";
+
+loop range(1 until 10) in N outSpace;
+
+print text spc;
+print text spc;
+
+loop(range(1 until 10)) start;
+print integer nnn;
