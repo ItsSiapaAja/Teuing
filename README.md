@@ -108,12 +108,3 @@ show;
 Dont forget to use a semicolon in end of line;
 ## There's No Error!
 Its for fun, dont be stressed:) (actually i'm too lazy for making an error message).
-## TODO in 0.0.2
-- [x] Adding a more loop syntax
-- [x] New datatype called boolean
-- [x] New manipulate syntax style (+, -, x, /)
-- [x] printspace keyword
-- [x] Adding a goto and label keyword
-- [x] erase keyword
-
-There will be a two version in 0.0.2 (a, b), the a version is the first update in version 0.0.2, and the b one is the last update.
