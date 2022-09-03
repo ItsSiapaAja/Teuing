@@ -1,113 +1,22 @@
-#include <iostream>
-#include <string>
-#include <fstream>
-#include <regex>
-#include <map>
-#include <iterator>
-#include <vector>
+#include "parse.h"
 
 using namespace std;
 
-class Parse
-{
-	private:
-		string text;
-
-		regex newKey{"^new\\s(text|integer|bool)\\s([a-z]{3})\\s"};
-		regex textVal{"\"(.*?)\";$"};
-		regex integerVal{"([-]?[0-9]+);$"};
-		regex boolVal{"(true|false);$"};
-		map<string, string> stringStorage;
-		map<string, int> integerStorage;
-		map<string, bool> boolStorage;
-
-		regex printKey{"^print\\s(text|integer|bool)\\s([a-z]{3});$"};
-		regex printSpaceKey{"^printspace\\s(text|integer|bool)\\s([a-z]{3});$"};
-
-		regex addKey{"^\\+\\s(text|integer)\\s([a-z]{3})\\s"};
-		regex minKey{"^\\-\\sinteger\\s([a-z]{3})\\s"};
-		regex mulKey{"^\\*\\sinteger\\s([a-z]{3})\\s"};
-		regex divKey{"^/\\sinteger\\s([a-z]{3})\\s"};
-		regex changeKey{"^change\\s(text|integer|bool)\\s([a-z]{3})\\s"};
-		regex eraseKey{"^erase\\s(text|integer|bool)\\s([a-z]{3});$"};
-
-		regex loopKey{"^loop\\srange\\(([0-9]+)\\suntil\\s([0-9]+)\\)\\sin\\sN\\s"};
-		regex outLineKey{"outLine;$"};
-		regex outSpaceKey{"outSpace;$"};
-		regex outKey{"out;$"};
-		map<string, int> nStorage;
-
-		regex loopScope{"^loop\\(range\\(([0-9]+)\\suntil\\s([0-9]+)\\)\\)\\sstart;$"};
-
-		regex labelKey{"^label\\s([a-z][0-9]);$"};
-		regex gotoKey{"^goto\\s([a-z][0-9]);$"};
-		map<string, string> labelStorage;
-
-		regex showStorageKey{"^show;$"};
-
-		int label = 0;
-		string labelName;
-
-		int inLoop = 0;
-		int beginLoop, endLoop;
-	public:
-		Parse(string text = "") {
-			this->text = text;
-		}
-
-		~Parse() {
-			stringStorage.clear();
-			integerStorage.clear();
-			nStorage.clear();
-		}
-
-		void setText(string text) {
-			this->text = text;
-		}
-
-		void regularSyntaxInBlock(int beginNum);
-		void regularSyntaxGoto(string textGoto);
-
-		void insideLoop(int begin, int end) {
-			for(; begin <= end; begin++)
+void Parse::regularSyntaxGoto(string textGoto) {
+	smatch m, value;
+	if(inLoop == 0)
 			{
-				regularSyntaxInBlock(begin);
-			}
-			inLoop = 0;
-		}
-
-		void start() {
-			smatch m, value;
-
-			if(!regex_search(this->text, m, gotoKey) && label == 1)
-			{
-				labelStorage[labelName] += this->text + '\n';
-			}
-			else if(regex_search(this->text, m, gotoKey))
-			{
-				stringstream strstream(labelStorage[m[1]]);
-				string textBuffer;
-				while(getline(strstream, textBuffer))
+				if(regex_search(textGoto, m, newKey))
 				{
-					regularSyntaxGoto(textBuffer);
-				}
-
-				label = 0;
-			}
-
-			if(inLoop == 0)
-			{
-				if(regex_search(this->text, m, newKey))
-				{
-					if(m[1] == "text" && regex_search(this->text, value, textVal))
+					if(m[1] == "text" && regex_search(textGoto, value, textVal))
 					{
 						stringStorage.insert(pair<string, string>(m[2], value[1]));
 					}
-					else if(m[1] == "integer" && regex_search(this->text, value, integerVal))
+					else if(m[1] == "integer" && regex_search(textGoto, value, integerVal))
 					{
 						integerStorage.insert(pair<string, int>(m[2], stoi(value[1])));
 					}
-					else if(m[1] == "bool" && regex_search(this->text, value, boolVal))
+					else if(m[1] == "bool" && regex_search(textGoto, value, boolVal))
 					{
 						if(value[1] == "true")
 						{
@@ -119,9 +28,9 @@ class Parse
 						}
 					}
 				}
-				else if(regex_search(this->text, m, addKey))
+				else if(regex_search(textGoto, m, addKey))
 				{
-					if(m[1] == "text" && regex_search(this->text, value, textVal))
+					if(m[1] == "text" && regex_search(textGoto, value, textVal))
 					{
 						for(auto itr = stringStorage.begin(); itr != stringStorage.end(); ++itr)
 						{
@@ -131,7 +40,7 @@ class Parse
 							}
 						}
 					}
-					else if(m[1] == "integer" && regex_search(this->text, value, integerVal))
+					else if(m[1] == "integer" && regex_search(textGoto, value, integerVal))
 					{
 						for(auto itr = integerStorage.begin(); itr != integerStorage.end(); ++itr)
 						{
@@ -142,9 +51,9 @@ class Parse
 						}
 					}
 				}
-				else if(regex_search(this->text, m, minKey))
+				else if(regex_search(textGoto, m, minKey))
 				{
-					if(regex_search(this->text, value, integerVal))
+					if(regex_search(textGoto, value, integerVal))
 					{
 						for(auto itr = integerStorage.begin(); itr != integerStorage.end(); ++itr)
 						{
@@ -155,9 +64,9 @@ class Parse
 						}
 					}
 				}
-				else if(regex_search(this->text, m, mulKey))
+				else if(regex_search(textGoto, m, mulKey))
 				{
-					if(regex_search(this->text, value, integerVal))
+					if(regex_search(textGoto, value, integerVal))
 					{
 						for(auto itr = integerStorage.begin(); itr != integerStorage.end(); ++itr)
 						{
@@ -168,9 +77,9 @@ class Parse
 						}
 					}
 				}
-				else if(regex_search(this->text, m, divKey))
+				else if(regex_search(textGoto, m, divKey))
 				{
-					if(regex_search(this->text, value, integerVal))
+					if(regex_search(textGoto, value, integerVal))
 					{
 						for(auto itr = integerStorage.begin(); itr != integerStorage.end(); ++itr)
 						{
@@ -181,9 +90,9 @@ class Parse
 						}
 					}
 				}
-				else if(regex_search(this->text, m, changeKey))
+				else if(regex_search(textGoto, m, changeKey))
 				{
-					if(m[1] == "text" && regex_search(this->text, value, textVal))
+					if(m[1] == "text" && regex_search(textGoto, value, textVal))
 					{
 						for(auto itr = stringStorage.begin(); itr != stringStorage.end(); ++itr)
 						{
@@ -193,7 +102,7 @@ class Parse
 							}
 						}
 					}
-					else if(m[1] == "integer" && regex_search(this->text, value, integerVal))
+					else if(m[1] == "integer" && regex_search(textGoto, value, integerVal))
 					{
 						for(auto itr = integerStorage.begin(); itr != integerStorage.end(); ++itr)
 						{
@@ -233,13 +142,13 @@ class Parse
 						boolStorage.erase(m[2]);
 					}
 				}
-				else if(regex_search(this->text, m, loopKey))
+				else if(regex_search(textGoto, m, loopKey))
 				{
 					int n = stoi(m[1]);
 					int end = stoi(m[2]);
 					if(n < end)
 					{
-						if(regex_search(this->text, m, outKey))
+						if(regex_search(textGoto, m, outKey))
 						{
 							nStorage["N"] = n;
 							for(; nStorage["N"] <= end; nStorage["N"]++)
@@ -247,7 +156,7 @@ class Parse
 								cout << nStorage["N"];
 							}
 						}
-						else if(regex_search(this->text, m, outSpaceKey))
+						else if(regex_search(textGoto, m, outSpaceKey))
 						{
 							nStorage["N"] = n;
 							for(; nStorage["N"] <= end; nStorage["N"]++)
@@ -255,7 +164,7 @@ class Parse
 								cout << nStorage["N"] << " ";
 							}
 						}
-						else if(regex_search(this->text, m, outLineKey))
+						else if(regex_search(textGoto, m, outLineKey))
 						{
 							nStorage["N"] = n;
 							for(; nStorage["N"] <= end; nStorage["N"]++)
@@ -264,10 +173,9 @@ class Parse
 							}
 						}
 					}
-
 					nStorage.clear();
 				}
-				else if(regex_search(this->text, m, loopScope))
+				else if(regex_search(textGoto, m, loopScope))
 				{
 					beginLoop = stoi(m[1]);
 					endLoop = stoi(m[2]);
@@ -276,7 +184,7 @@ class Parse
 						inLoop = 1;
 					}
 				}
-				else if(regex_search(this->text, m, printKey))
+				else if(regex_search(textGoto, m, printKey))
 				{
 					if(m[1] == "text")
 					{
@@ -305,12 +213,11 @@ class Parse
 							if(itr->first == m[2])
 							{
 								cout << itr->second << endl;
-
 							}
 						}
 					}
 				}
-				else if(regex_search(this->text, m, printSpaceKey))
+				else if(regex_search(textGoto, m, printSpaceKey))
 				{
 					if(m[1] == "text")
 					{
@@ -339,12 +246,11 @@ class Parse
 							if(itr->first == m[2])
 							{
 								cout << itr->second << " ";
-
 							}
 						}
 					}
 				}
-				else if(regex_search(this->text, m, showStorageKey))
+				else if(regex_search(textGoto, m, showStorageKey))
 				{
 					cout << "Text : " << endl;
 					for(auto itr = stringStorage.begin(); itr != stringStorage.end(); ++itr)
@@ -366,15 +272,9 @@ class Parse
 						cout << itr->first << " : " << itr->second << endl;
 					}
 				}
-				else if(regex_search(this->text, m, labelKey) && label == 0)
-				{
-					label = 1;
-					labelName = m[1];
-				}
 			}
 			else if(inLoop == 1)
 			{
 				insideLoop(beginLoop, endLoop);
 			}
-		}
-};
+}

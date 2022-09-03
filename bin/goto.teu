@@ -1,0 +1,21 @@
+new text abc "Hello World";
+new integer abc 10;
+new text spc " ";
+
+label a1;
+
+print text abc;
++ text abc ", Teuing is fun";
+print text abc;
+
+print text spc;
+goto a1;
+
+label a2;
+
+print integer abc;
++ integer abc 8;
+print integer abc;
+
+goto a1;
+goto a2;

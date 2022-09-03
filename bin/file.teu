@@ -1,6 +1,22 @@
+new text spc " ";
+---------------------------------
+
 new text inf "This is a Teuing test version 0.0.2a";
 print text inf;
 
 new text abc "Hello World";
 print text abc;
+print text spc;
 ---------------------------------
+
+label a1;
+loop range(1 until 10) in N outSpace;
+print text spc;
+
+goto a1;
+---------------------------------
+
+erase text abc;
+print text abc;
+print text spc;
+show;

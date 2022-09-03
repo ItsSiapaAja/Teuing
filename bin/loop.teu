@@ -7,3 +7,5 @@ print text spc;
 
 loop(range(1 until 10)) start;
 print integer nnn;
+
+print text spc;

@@ -1,24 +1,27 @@
+new text spc " ";
+
 - Concate a string
 new text abc "Hello";
 print text abc;
-add text abc " World";
++ text abc " World";
 print text abc;
 
-- Increase, decrease, multiply and divide a data with another number
-new integer abb 10;
-print integer abb;
+- Increase, decrease, multiply and divide a data with another number (In 0.0.2b)
+new integer abd 10;
+print integer abd;
 
-add integer abb 5;
-print integer abb;
-min integer abb 5;
-print integer abb;
-mul intger abb 5;
-print integer abb;
-div integer abb 5;
-print integer abb;
++ integer abd 3;
+print integer abd;
+- integer abd 5;
+print integer abd;
+* integer abd 8;
+print integer abd;
+/ integer abd 8;
+print integer abd;
 
-new integer ngt -10;
-print integer ngt;
+- Change a value
+change text abc "Halo Semua";
+print text abc;
 
-add integer ngt 1;
-print integer ngt;
+- Erase a data
+erase text abc;

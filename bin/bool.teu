@@ -6,3 +6,6 @@ printspace bool jik;
 
 new bool fig true;
 printspace bool fig;
+
+change bool fig false;
+printspace bool fig;

@@ -1,14 +1,15 @@
 /*
 	Teuing Language
-	Version 0.0.2a (Loop Update)
+	Version 0.0.2b (Loop Update)
 	Since 2022
 
 	Main file, everything is start here (console), then parse the .teu file into parse.h
 
 	New Feature :
 	- New Loop Syntax [ok]
-	- Boolean type [ok]
-	- printspace keyword [ok]
+	- New manipulate syntax (+, -, x, /) [ok]
+	- erase keyword
+	- goto and label keyword [ok]
 */
 
 #include <iostream>
@@ -29,7 +30,7 @@ bool backConsole()
 	string textBuffer;
 	Parse* parse = new Parse();
 
-	if(input == "-c")
+	if(input == "run")
 	{
 		if(!args[0].empty())
 		{
@@ -66,6 +67,13 @@ bool backConsole()
 			system("color 0f");
 			file.close();
 			return true;
+		}
+	}
+	else if(input == "clear")
+	{
+		if(args[0] == "yes")
+		{
+			system("cls");
 		}
 	}
 
