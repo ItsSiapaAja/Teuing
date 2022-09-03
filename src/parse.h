@@ -50,9 +50,13 @@ class Parse
 
 		int inLoop = 0;
 		int beginLoop, endLoop;
+
+		const string version = "Teuing Version 0.0.3";
 	public:
 		Parse(string text = "") {
 			this->text = text;
+			stringStorage["spc"] = " ";
+			stringStorage["ver"] = version;
 		}
 
 		~Parse() {

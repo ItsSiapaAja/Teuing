@@ -11,13 +11,8 @@ The file extentions are `.teu`. For the exit command just follow you can write i
 [2] >> yes
 ```
 then it will be showing a "Goodbye" text for a second.
-## What's New In 0.0.2b?
-- Changing add, min, mul, and div Syntax
-- Erase keyword for removing a single data
-- Label and goto
-- Boolean can be changed by change
-- clear command
-- Changing `-c` command to `run`
+## What's New In 0.0.3?
+- Global data called `spc` and `ver` (text type)
 ## "Hello World" Program
 For making a Hello World program, you just need a 2 line of code : 
 ```

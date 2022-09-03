@@ -1,15 +1,9 @@
 /*
 	Teuing Language
-	Version 0.0.2b (Loop Update)
+	Version 0.0.3
 	Since 2022
 
 	Main file, everything is start here (console), then parse the .teu file into parse.h
-
-	New Feature :
-	- New Loop Syntax [ok]
-	- New manipulate syntax (+, -, x, /) [ok]
-	- erase keyword
-	- goto and label keyword [ok]
 */
 
 #include <iostream>
