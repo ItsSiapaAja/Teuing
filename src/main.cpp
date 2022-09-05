@@ -1,6 +1,6 @@
 /*
 	Teuing Language
-	Version 0.0.3
+	Version 0.0.4
 	Since 2022
 
 	Main file, everything is start here (console), then parse the .teu file into parse.h
@@ -81,7 +81,7 @@ void mainConsole()
 	bool exit;
 	system("cls");
 	system("color 1f");
-	cout << "Teuing Language\nVerison 0.0.2a" << endl;
+	cout << version << endl;
 	while(exit != true)
 	{
 		cout << "[1] >> ";

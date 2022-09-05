@@ -8,6 +8,11 @@
 
 using namespace std;
 
+#ifndef TEUING_STD
+#define TEUING_STD
+const string version = "Teuing Version 0.0.4";
+#endif
+
 class Parse
 {
 	private:
@@ -50,8 +55,6 @@ class Parse
 
 		int inLoop = 0;
 		int beginLoop, endLoop;
-
-		const string version = "Teuing Version 0.0.3";
 	public:
 		Parse(string text = "") {
 			this->text = text;
