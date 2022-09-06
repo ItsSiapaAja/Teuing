@@ -11,9 +11,8 @@ The file extentions are `.teu`. For the exit command just follow you can write i
 [2] >> yes
 ```
 then it will be showing a "Goodbye" text for a second.
-## What's New In 0.0.4?
-- Changing a version in the title screen
-- Bug Fixes
+## What's New In 0.0.5?
+- New datatype (`float`, `double`)
 ## "Hello World" Program
 For making a Hello World program, you just need a 2 line of code : 
 ```
@@ -22,7 +21,7 @@ print text abc;
 ```
 This line `new text abc "Hello World;` is for making a new data with a name "abc" and having a text type, and `print text abc;` is for print a data named "abc" with a text type. Every data is saved in different type, so you can actually having a same data name but the types are must be different.
 ## Data Type
-There are a 3 different data type (and remember, every different data type has its own storage), the data types are `text`, `integer`, and `bool`.
+There are a 3 different data type (and remember, every different data type has its own storage), the data types are `text`, `integer`, `bool`, `float`, and `double`.
 ## Data Manipulate
 | Keyword | Description                                                     |
 |---------|-----------------------------------------------------------------|

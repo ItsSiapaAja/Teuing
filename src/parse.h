@@ -10,7 +10,7 @@ using namespace std;
 
 #ifndef TEUING_STD
 #define TEUING_STD
-const string version = "Teuing Version 0.0.4";
+const string version = "Teuing Version 0.0.5";
 #endif
 
 class Parse
@@ -18,23 +18,27 @@ class Parse
 	private:
 		string text;
 
-		regex newKey{"^new\\s(text|integer|bool)\\s([a-z]{3})\\s"};
+		regex newKey{"^new\\s(text|integer|bool|double|float)\\s([a-z]{3})\\s"};
 		regex textVal{"\"(.*?)\";$"};
 		regex integerVal{"([-]?[0-9]+);$"};
+		regex floatVal{"([-]?[0-9]+[\\.][0-9]*);$"};
+		regex doubleVal{"([-]?[0-9]+[\\.]?[0-9]*);$"};
 		regex boolVal{"(true|false);$"};
 		map<string, string> stringStorage;
 		map<string, int> integerStorage;
+		map<string, float> floatStorage;
+		map<string, double> doubleStorage;
 		map<string, bool> boolStorage;
 
-		regex printKey{"^print\\s(text|integer|bool)\\s([a-z]{3});$"};
-		regex printSpaceKey{"^printspace\\s(text|integer|bool)\\s([a-z]{3});$"};
+		regex printKey{"^print\\s(text|integer|bool|double|float)\\s([a-z]{3});$"};
+		regex printSpaceKey{"^printspace\\s(text|integer|bool|double|float)\\s([a-z]{3});$"};
 
-		regex addKey{"^\\+\\s(text|integer)\\s([a-z]{3})\\s"};
-		regex minKey{"^\\-\\sinteger\\s([a-z]{3})\\s"};
-		regex mulKey{"^\\*\\sinteger\\s([a-z]{3})\\s"};
-		regex divKey{"^/\\sinteger\\s([a-z]{3})\\s"};
-		regex changeKey{"^change\\s(text|integer|bool)\\s([a-z]{3})\\s"};
-		regex eraseKey{"^erase\\s(text|integer|bool)\\s([a-z]{3});$"};
+		regex addKey{"^\\+\\s(text|integer|double|float)\\s([a-z]{3})\\s"};
+		regex minKey{"^\\-\\s(integer|double|float)\\s([a-z]{3})\\s"};
+		regex mulKey{"^\\*\\s(integer|double|float)\\s([a-z]{3})\\s"};
+		regex divKey{"^/\\s(integer|double|float)\\s([a-z]{3})\\s"};
+		regex changeKey{"^change\\s(text|integer|bool|double|float)\\s([a-z]{3})\\s"};
+		regex eraseKey{"^erase\\s(text|integer|bool|double|float)\\s([a-z]{3});$"};
 
 		regex loopKey{"^loop\\srange\\(([0-9]+)\\suntil\\s([0-9]+)\\)\\sin\\sN\\s"};
 		regex outLineKey{"outLine;$"};
@@ -114,6 +118,14 @@ class Parse
 					{
 						integerStorage.insert(pair<string, int>(m[2], stoi(value[1])));
 					}
+					else if(m[1] == "float" && regex_search(this->text, value, floatVal))
+					{
+						floatStorage.insert(pair<string, float>(m[2], stof(value[1])));
+					}
+					else if(m[1] == "double" && regex_search(this->text, value, doubleVal))
+					{
+						doubleStorage.insert(pair<string, double>(m[2], stod(value[1])));
+					}
 					else if(m[1] == "bool" && regex_search(this->text, value, boolVal))
 					{
 						if(value[1] == "true")
@@ -148,42 +160,122 @@ class Parse
 							}
 						}
 					}
+					else if(m[1] == "float" && regex_search(this->text, value, floatVal))
+					{
+						for(auto itr = floatStorage.begin(); itr != floatStorage.end(); ++itr)
+						{
+							if(m[2] == itr->first)
+							{
+								itr->second += stof(value[1]);
+							}
+						}
+					}
+					else if(m[1] == "double" && regex_search(this->text, value, doubleVal))
+					{
+						for(auto itr = doubleStorage.begin(); itr != doubleStorage.end(); ++itr)
+						{
+							if(m[2] == itr->first)
+							{
+								itr->second += stod(value[1]);
+							}
+						}
+					}
 				}
 				else if(regex_search(this->text, m, minKey))
 				{
-					if(regex_search(this->text, value, integerVal))
+					if(m[1] == "integer" && regex_search(this->text, value, integerVal))
 					{
 						for(auto itr = integerStorage.begin(); itr != integerStorage.end(); ++itr)
 						{
-							if(m[1] == itr->first)
+							if(m[2] == itr->first)
 							{
 								itr->second -= stoi(value[1]);
+							}
+						}
+					}
+					else if(m[1] == "float" && regex_search(this->text, value, floatVal))
+					{
+						for(auto itr = floatStorage.begin(); itr != floatStorage.end(); ++itr)
+						{
+							if(m[2] == itr->first)
+							{
+								itr->second -= stof(value[1]);
+							}
+						}
+					}
+					else if(m[1] == "double" && regex_search(this->text, value, doubleVal))
+					{
+						for(auto itr = doubleStorage.begin(); itr != doubleStorage.end(); ++itr)
+						{
+							if(m[2] == itr->first)
+							{
+								itr->second -= stod(value[1]);
 							}
 						}
 					}
 				}
 				else if(regex_search(this->text, m, mulKey))
 				{
-					if(regex_search(this->text, value, integerVal))
+					if(m[1] == "integer" && regex_search(this->text, value, integerVal))
 					{
 						for(auto itr = integerStorage.begin(); itr != integerStorage.end(); ++itr)
 						{
-							if(m[1] == itr->first)
+							if(m[2] == itr->first)
 							{
 								itr->second *= stoi(value[1]);
+							}
+						}
+					}
+					else if(m[1] == "float" && regex_search(this->text, value, floatVal))
+					{
+						for(auto itr = floatStorage.begin(); itr != floatStorage.end(); ++itr)
+						{
+							if(m[2] == itr->first)
+							{
+								itr->second *= stof(value[1]);
+							}
+						}
+					}
+					else if(m[1] == "double" && regex_search(this->text, value, doubleVal))
+					{
+						for(auto itr = doubleStorage.begin(); itr != doubleStorage.end(); ++itr)
+						{
+							if(m[2] == itr->first)
+							{
+								itr->second *= stod(value[1]);
 							}
 						}
 					}
 				}
 				else if(regex_search(this->text, m, divKey))
 				{
-					if(regex_search(this->text, value, integerVal))
+					if(m[1] == "integer" && regex_search(this->text, value, integerVal))
 					{
 						for(auto itr = integerStorage.begin(); itr != integerStorage.end(); ++itr)
 						{
-							if(m[1] == itr->first)
+							if(m[2] == itr->first)
 							{
 								itr->second /= stoi(value[1]);
+							}
+						}
+					}
+					else if(m[1] == "float" && regex_search(this->text, value, floatVal))
+					{
+						for(auto itr = floatStorage.begin(); itr != floatStorage.end(); ++itr)
+						{
+							if(m[2] == itr->first)
+							{
+								itr->second /= stof(value[1]);
+							}
+						}
+					}
+					else if(m[1] == "double" && regex_search(this->text, value, doubleVal))
+					{
+						for(auto itr = doubleStorage.begin(); itr != doubleStorage.end(); ++itr)
+						{
+							if(m[2] == itr->first)
+							{
+								itr->second /= stod(value[1]);
 							}
 						}
 					}
@@ -207,6 +299,26 @@ class Parse
 							if(m[2] == itr->first)
 							{
 								itr->second = stoi(value[1]);
+							}
+						}
+					}
+					else if(m[1] == "float" && regex_search(this->text, value, floatVal))
+					{
+						for(auto itr = floatStorage.begin(); itr != floatStorage.end(); ++itr)
+						{
+							if(m[2] == itr->first)
+							{
+								itr->second = stof(value[1]);
+							}
+						}
+					}
+					else if(m[1] == "double" && regex_search(this->text, value, doubleVal))
+					{
+						for(auto itr = doubleStorage.begin(); itr != doubleStorage.end(); ++itr)
+						{
+							if(m[2] == itr->first)
+							{
+								itr->second = stod(value[1]);
 							}
 						}
 					}
@@ -234,6 +346,14 @@ class Parse
 					else if(m[1] == "integer")
 					{
 						integerStorage.erase(m[2]);
+					}
+					else if(m[1] == "float")
+					{
+						floatStorage.erase(m[2]);
+					}
+					else if(m[1] == "double")
+					{
+						doubleStorage.erase(m[2]);
 					}
 					else if(m[1] == "bool")
 					{
@@ -305,6 +425,26 @@ class Parse
 							}
 						}
 					}
+					else if(m[1] == "float")
+					{
+						for(auto itr = floatStorage.begin(); itr != floatStorage.end(); ++itr)
+						{
+							if(m[2] == itr->first)
+							{
+								cout << itr->second << endl;
+							}
+						}
+					}
+					else if(m[1] == "double")
+					{
+						for(auto itr = doubleStorage.begin(); itr != doubleStorage.end(); ++itr)
+						{
+							if(m[2] == itr->first)
+							{
+								cout << itr->second << endl;
+							}
+						}
+					}
 					else if(m[1] == "bool")
 					{
 						for(auto itr = boolStorage.begin(); itr != boolStorage.end(); ++itr)
@@ -339,6 +479,26 @@ class Parse
 							}
 						}
 					}
+					else if(m[1] == "float")
+					{
+						for(auto itr = floatStorage.begin(); itr != floatStorage.end(); ++itr)
+						{
+							if(m[2] == itr->first)
+							{
+								cout << itr->second << " ";
+							}
+						}
+					}
+					else if(m[1] == "double")
+					{
+						for(auto itr = doubleStorage.begin(); itr != doubleStorage.end(); ++itr)
+						{
+							if(m[2] == itr->first)
+							{
+								cout << itr->second << " ";
+							}
+						}
+					}
 					else if(m[1] == "bool")
 					{
 						for(auto itr = boolStorage.begin(); itr != boolStorage.end(); ++itr)
@@ -362,6 +522,20 @@ class Parse
 					cout << endl;
 					cout << "Integer : " << endl;
 					for(auto itr = integerStorage.begin(); itr != integerStorage.end(); ++itr)
+					{
+						cout << itr->first << " : " << itr->second << endl;
+					}
+
+					cout << endl;
+					cout << "Float : " << endl;
+					for(auto itr = floatStorage.begin(); itr != floatStorage.end(); ++itr)
+					{
+						cout << itr->first << " : " << itr->second << endl;
+					}
+
+					cout << endl;
+					cout << "Double : " << endl;
+					for(auto itr = doubleStorage.begin(); itr != doubleStorage.end(); ++itr)
 					{
 						cout << itr->first << " : " << itr->second << endl;
 					}

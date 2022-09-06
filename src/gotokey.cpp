@@ -6,17 +6,25 @@ void Parse::regularSyntaxGoto(string textGoto) {
 	smatch m, value;
 	if(inLoop == 0)
 			{
-				if(regex_search(textGoto, m, newKey))
+				if(regex_search(this->text, m, newKey))
 				{
-					if(m[1] == "text" && regex_search(textGoto, value, textVal))
+					if(m[1] == "text" && regex_search(this->text, value, textVal))
 					{
 						stringStorage.insert(pair<string, string>(m[2], value[1]));
 					}
-					else if(m[1] == "integer" && regex_search(textGoto, value, integerVal))
+					else if(m[1] == "integer" && regex_search(this->text, value, integerVal))
 					{
 						integerStorage.insert(pair<string, int>(m[2], stoi(value[1])));
 					}
-					else if(m[1] == "bool" && regex_search(textGoto, value, boolVal))
+					else if(m[1] == "float" && regex_search(this->text, value, floatVal))
+					{
+						floatStorage.insert(pair<string, float>(m[2], stof(value[1])));
+					}
+					else if(m[1] == "double" && regex_search(this->text, value, doubleVal))
+					{
+						doubleStorage.insert(pair<string, double>(m[2], stod(value[1])));
+					}
+					else if(m[1] == "bool" && regex_search(this->text, value, boolVal))
 					{
 						if(value[1] == "true")
 						{
@@ -28,9 +36,9 @@ void Parse::regularSyntaxGoto(string textGoto) {
 						}
 					}
 				}
-				else if(regex_search(textGoto, m, addKey))
+				else if(regex_search(this->text, m, addKey))
 				{
-					if(m[1] == "text" && regex_search(textGoto, value, textVal))
+					if(m[1] == "text" && regex_search(this->text, value, textVal))
 					{
 						for(auto itr = stringStorage.begin(); itr != stringStorage.end(); ++itr)
 						{
@@ -40,7 +48,7 @@ void Parse::regularSyntaxGoto(string textGoto) {
 							}
 						}
 					}
-					else if(m[1] == "integer" && regex_search(textGoto, value, integerVal))
+					else if(m[1] == "integer" && regex_search(this->text, value, integerVal))
 					{
 						for(auto itr = integerStorage.begin(); itr != integerStorage.end(); ++itr)
 						{
@@ -50,49 +58,129 @@ void Parse::regularSyntaxGoto(string textGoto) {
 							}
 						}
 					}
+					else if(m[1] == "float" && regex_search(this->text, value, floatVal))
+					{
+						for(auto itr = floatStorage.begin(); itr != floatStorage.end(); ++itr)
+						{
+							if(m[2] == itr->first)
+							{
+								itr->second += stof(value[1]);
+							}
+						}
+					}
+					else if(m[1] == "double" && regex_search(this->text, value, doubleVal))
+					{
+						for(auto itr = doubleStorage.begin(); itr != doubleStorage.end(); ++itr)
+						{
+							if(m[2] == itr->first)
+							{
+								itr->second += stod(value[1]);
+							}
+						}
+					}
 				}
-				else if(regex_search(textGoto, m, minKey))
+				else if(regex_search(this->text, m, minKey))
 				{
-					if(regex_search(textGoto, value, integerVal))
+					if(m[1] == "integer" && regex_search(this->text, value, integerVal))
 					{
 						for(auto itr = integerStorage.begin(); itr != integerStorage.end(); ++itr)
 						{
-							if(m[1] == itr->first)
+							if(m[2] == itr->first)
 							{
 								itr->second -= stoi(value[1]);
 							}
 						}
 					}
+					else if(m[1] == "float" && regex_search(this->text, value, floatVal))
+					{
+						for(auto itr = floatStorage.begin(); itr != floatStorage.end(); ++itr)
+						{
+							if(m[2] == itr->first)
+							{
+								itr->second -= stof(value[1]);
+							}
+						}
+					}
+					else if(m[1] == "double" && regex_search(this->text, value, doubleVal))
+					{
+						for(auto itr = doubleStorage.begin(); itr != doubleStorage.end(); ++itr)
+						{
+							if(m[2] == itr->first)
+							{
+								itr->second -= stod(value[1]);
+							}
+						}
+					}
 				}
-				else if(regex_search(textGoto, m, mulKey))
+				else if(regex_search(this->text, m, mulKey))
 				{
-					if(regex_search(textGoto, value, integerVal))
+					if(m[1] == "integer" && regex_search(this->text, value, integerVal))
 					{
 						for(auto itr = integerStorage.begin(); itr != integerStorage.end(); ++itr)
 						{
-							if(m[1] == itr->first)
+							if(m[2] == itr->first)
 							{
 								itr->second *= stoi(value[1]);
 							}
 						}
 					}
+					else if(m[1] == "float" && regex_search(this->text, value, floatVal))
+					{
+						for(auto itr = floatStorage.begin(); itr != floatStorage.end(); ++itr)
+						{
+							if(m[2] == itr->first)
+							{
+								itr->second *= stof(value[1]);
+							}
+						}
+					}
+					else if(m[1] == "double" && regex_search(this->text, value, doubleVal))
+					{
+						for(auto itr = doubleStorage.begin(); itr != doubleStorage.end(); ++itr)
+						{
+							if(m[2] == itr->first)
+							{
+								itr->second *= stod(value[1]);
+							}
+						}
+					}
 				}
-				else if(regex_search(textGoto, m, divKey))
+				else if(regex_search(this->text, m, divKey))
 				{
-					if(regex_search(textGoto, value, integerVal))
+					if(m[1] == "integer" && regex_search(this->text, value, integerVal))
 					{
 						for(auto itr = integerStorage.begin(); itr != integerStorage.end(); ++itr)
 						{
-							if(m[1] == itr->first)
+							if(m[2] == itr->first)
 							{
 								itr->second /= stoi(value[1]);
 							}
 						}
 					}
+					else if(m[1] == "float" && regex_search(this->text, value, floatVal))
+					{
+						for(auto itr = floatStorage.begin(); itr != floatStorage.end(); ++itr)
+						{
+							if(m[2] == itr->first)
+							{
+								itr->second /= stof(value[1]);
+							}
+						}
+					}
+					else if(m[1] == "double" && regex_search(this->text, value, doubleVal))
+					{
+						for(auto itr = doubleStorage.begin(); itr != doubleStorage.end(); ++itr)
+						{
+							if(m[2] == itr->first)
+							{
+								itr->second /= stod(value[1]);
+							}
+						}
+					}
 				}
-				else if(regex_search(textGoto, m, changeKey))
+				else if(regex_search(this->text, m, changeKey))
 				{
-					if(m[1] == "text" && regex_search(textGoto, value, textVal))
+					if(m[1] == "text" && regex_search(this->text, value, textVal))
 					{
 						for(auto itr = stringStorage.begin(); itr != stringStorage.end(); ++itr)
 						{
@@ -102,13 +190,33 @@ void Parse::regularSyntaxGoto(string textGoto) {
 							}
 						}
 					}
-					else if(m[1] == "integer" && regex_search(textGoto, value, integerVal))
+					else if(m[1] == "integer" && regex_search(this->text, value, integerVal))
 					{
 						for(auto itr = integerStorage.begin(); itr != integerStorage.end(); ++itr)
 						{
 							if(m[2] == itr->first)
 							{
 								itr->second = stoi(value[1]);
+							}
+						}
+					}
+					else if(m[1] == "float" && regex_search(this->text, value, floatVal))
+					{
+						for(auto itr = floatStorage.begin(); itr != floatStorage.end(); ++itr)
+						{
+							if(m[2] == itr->first)
+							{
+								itr->second = stof(value[1]);
+							}
+						}
+					}
+					else if(m[1] == "double" && regex_search(this->text, value, doubleVal))
+					{
+						for(auto itr = doubleStorage.begin(); itr != doubleStorage.end(); ++itr)
+						{
+							if(m[2] == itr->first)
+							{
+								itr->second = stod(value[1]);
 							}
 						}
 					}
@@ -137,18 +245,26 @@ void Parse::regularSyntaxGoto(string textGoto) {
 					{
 						integerStorage.erase(m[2]);
 					}
+					else if(m[1] == "float")
+					{
+						floatStorage.erase(m[2]);
+					}
+					else if(m[1] == "double")
+					{
+						doubleStorage.erase(m[2]);
+					}
 					else if(m[1] == "bool")
 					{
 						boolStorage.erase(m[2]);
 					}
 				}
-				else if(regex_search(textGoto, m, loopKey))
+				else if(regex_search(this->text, m, loopKey))
 				{
 					int n = stoi(m[1]);
 					int end = stoi(m[2]);
 					if(n < end)
 					{
-						if(regex_search(textGoto, m, outKey))
+						if(regex_search(this->text, m, outKey))
 						{
 							nStorage["N"] = n;
 							for(; nStorage["N"] <= end; nStorage["N"]++)
@@ -156,7 +272,7 @@ void Parse::regularSyntaxGoto(string textGoto) {
 								cout << nStorage["N"];
 							}
 						}
-						else if(regex_search(textGoto, m, outSpaceKey))
+						else if(regex_search(this->text, m, outSpaceKey))
 						{
 							nStorage["N"] = n;
 							for(; nStorage["N"] <= end; nStorage["N"]++)
@@ -164,7 +280,7 @@ void Parse::regularSyntaxGoto(string textGoto) {
 								cout << nStorage["N"] << " ";
 							}
 						}
-						else if(regex_search(textGoto, m, outLineKey))
+						else if(regex_search(this->text, m, outLineKey))
 						{
 							nStorage["N"] = n;
 							for(; nStorage["N"] <= end; nStorage["N"]++)
@@ -173,9 +289,10 @@ void Parse::regularSyntaxGoto(string textGoto) {
 							}
 						}
 					}
+
 					nStorage.clear();
 				}
-				else if(regex_search(textGoto, m, loopScope))
+				else if(regex_search(this->text, m, loopScope))
 				{
 					beginLoop = stoi(m[1]);
 					endLoop = stoi(m[2]);
@@ -184,7 +301,7 @@ void Parse::regularSyntaxGoto(string textGoto) {
 						inLoop = 1;
 					}
 				}
-				else if(regex_search(textGoto, m, printKey))
+				else if(regex_search(this->text, m, printKey))
 				{
 					if(m[1] == "text")
 					{
@@ -206,6 +323,26 @@ void Parse::regularSyntaxGoto(string textGoto) {
 							}
 						}
 					}
+					else if(m[1] == "float")
+					{
+						for(auto itr = floatStorage.begin(); itr != floatStorage.end(); ++itr)
+						{
+							if(m[2] == itr->first)
+							{
+								cout << itr->second << endl;
+							}
+						}
+					}
+					else if(m[1] == "double")
+					{
+						for(auto itr = doubleStorage.begin(); itr != doubleStorage.end(); ++itr)
+						{
+							if(m[2] == itr->first)
+							{
+								cout << itr->second << endl;
+							}
+						}
+					}
 					else if(m[1] == "bool")
 					{
 						for(auto itr = boolStorage.begin(); itr != boolStorage.end(); ++itr)
@@ -213,11 +350,12 @@ void Parse::regularSyntaxGoto(string textGoto) {
 							if(itr->first == m[2])
 							{
 								cout << itr->second << endl;
+
 							}
 						}
 					}
 				}
-				else if(regex_search(textGoto, m, printSpaceKey))
+				else if(regex_search(this->text, m, printSpaceKey))
 				{
 					if(m[1] == "text")
 					{
@@ -239,6 +377,26 @@ void Parse::regularSyntaxGoto(string textGoto) {
 							}
 						}
 					}
+					else if(m[1] == "float")
+					{
+						for(auto itr = floatStorage.begin(); itr != floatStorage.end(); ++itr)
+						{
+							if(m[2] == itr->first)
+							{
+								cout << itr->second << " ";
+							}
+						}
+					}
+					else if(m[1] == "double")
+					{
+						for(auto itr = doubleStorage.begin(); itr != doubleStorage.end(); ++itr)
+						{
+							if(m[2] == itr->first)
+							{
+								cout << itr->second << " ";
+							}
+						}
+					}
 					else if(m[1] == "bool")
 					{
 						for(auto itr = boolStorage.begin(); itr != boolStorage.end(); ++itr)
@@ -246,11 +404,12 @@ void Parse::regularSyntaxGoto(string textGoto) {
 							if(itr->first == m[2])
 							{
 								cout << itr->second << " ";
+
 							}
 						}
 					}
 				}
-				else if(regex_search(textGoto, m, showStorageKey))
+				else if(regex_search(this->text, m, showStorageKey))
 				{
 					cout << "Text : " << endl;
 					for(auto itr = stringStorage.begin(); itr != stringStorage.end(); ++itr)
@@ -261,6 +420,20 @@ void Parse::regularSyntaxGoto(string textGoto) {
 					cout << endl;
 					cout << "Integer : " << endl;
 					for(auto itr = integerStorage.begin(); itr != integerStorage.end(); ++itr)
+					{
+						cout << itr->first << " : " << itr->second << endl;
+					}
+
+					cout << endl;
+					cout << "Float : " << endl;
+					for(auto itr = floatStorage.begin(); itr != floatStorage.end(); ++itr)
+					{
+						cout << itr->first << " : " << itr->second << endl;
+					}
+
+					cout << endl;
+					cout << "Double : " << endl;
+					for(auto itr = doubleStorage.begin(); itr != doubleStorage.end(); ++itr)
 					{
 						cout << itr->first << " : " << itr->second << endl;
 					}

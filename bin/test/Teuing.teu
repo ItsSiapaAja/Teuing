@@ -1,6 +1,2 @@
-new text abc "Hello World";
-loop range(1 until 10) in N outSpace;
-print text spc;
-print text abc;
-
-print text ver;
+new float abc 1.;
+print float abc;
