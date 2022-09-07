@@ -8,145 +8,19 @@ void Parse::regularSyntaxInBlock(int beginNum) {
 	integerStorage["nnn"] = beginNum;
 	if(regex_search(this->text, m, addKey))
 				{
-					if(m[1] == "text" && regex_search(this->text, value, textVal))
-					{
-						for(auto itr = stringStorage.begin(); itr != stringStorage.end(); ++itr)
-						{
-							if(m[2] == itr->first)
-							{
-								itr->second += value[1];
-							}
-						}
-					}
-					else if(m[1] == "integer" && regex_search(this->text, value, integerVal))
-					{
-						for(auto itr = integerStorage.begin(); itr != integerStorage.end(); ++itr)
-						{
-							if(m[2] == itr->first)
-							{
-								itr->second += stoi(value[1]);
-							}
-						}
-					}
-					else if(m[1] == "float" && regex_search(this->text, value, floatVal))
-					{
-						for(auto itr = floatStorage.begin(); itr != floatStorage.end(); ++itr)
-						{
-							if(m[2] == itr->first)
-							{
-								itr->second += stof(value[1]);
-							}
-						}
-					}
-					else if(m[1] == "double" && regex_search(this->text, value, doubleVal))
-					{
-						for(auto itr = doubleStorage.begin(); itr != doubleStorage.end(); ++itr)
-						{
-							if(m[2] == itr->first)
-							{
-								itr->second += stod(value[1]);
-							}
-						}
-					}
+					addKeyword(m[1], m[2], value);
 				}
 				else if(regex_search(this->text, m, minKey))
 				{
-					if(m[1] == "integer" && regex_search(this->text, value, integerVal))
-					{
-						for(auto itr = integerStorage.begin(); itr != integerStorage.end(); ++itr)
-						{
-							if(m[2] == itr->first)
-							{
-								itr->second -= stoi(value[1]);
-							}
-						}
-					}
-					else if(m[1] == "float" && regex_search(this->text, value, floatVal))
-					{
-						for(auto itr = floatStorage.begin(); itr != floatStorage.end(); ++itr)
-						{
-							if(m[2] == itr->first)
-							{
-								itr->second -= stof(value[1]);
-							}
-						}
-					}
-					else if(m[1] == "double" && regex_search(this->text, value, doubleVal))
-					{
-						for(auto itr = doubleStorage.begin(); itr != doubleStorage.end(); ++itr)
-						{
-							if(m[2] == itr->first)
-							{
-								itr->second -= stod(value[1]);
-							}
-						}
-					}
+					minKeyword(m[1], m[2], value);
 				}
 				else if(regex_search(this->text, m, mulKey))
 				{
-					if(m[1] == "integer" && regex_search(this->text, value, integerVal))
-					{
-						for(auto itr = integerStorage.begin(); itr != integerStorage.end(); ++itr)
-						{
-							if(m[2] == itr->first)
-							{
-								itr->second *= stoi(value[1]);
-							}
-						}
-					}
-					else if(m[1] == "float" && regex_search(this->text, value, floatVal))
-					{
-						for(auto itr = floatStorage.begin(); itr != floatStorage.end(); ++itr)
-						{
-							if(m[2] == itr->first)
-							{
-								itr->second *= stof(value[1]);
-							}
-						}
-					}
-					else if(m[1] == "double" && regex_search(this->text, value, doubleVal))
-					{
-						for(auto itr = doubleStorage.begin(); itr != doubleStorage.end(); ++itr)
-						{
-							if(m[2] == itr->first)
-							{
-								itr->second *= stod(value[1]);
-							}
-						}
-					}
+					mulKeyword(m[1], m[2], value);
 				}
 				else if(regex_search(this->text, m, divKey))
 				{
-					if(m[1] == "integer" && regex_search(this->text, value, integerVal))
-					{
-						for(auto itr = integerStorage.begin(); itr != integerStorage.end(); ++itr)
-						{
-							if(m[2] == itr->first)
-							{
-								itr->second /= stoi(value[1]);
-							}
-						}
-					}
-					else if(m[1] == "float" && regex_search(this->text, value, floatVal))
-					{
-						for(auto itr = floatStorage.begin(); itr != floatStorage.end(); ++itr)
-						{
-							if(m[2] == itr->first)
-							{
-								itr->second /= stof(value[1]);
-							}
-						}
-					}
-					else if(m[1] == "double" && regex_search(this->text, value, doubleVal))
-					{
-						for(auto itr = doubleStorage.begin(); itr != doubleStorage.end(); ++itr)
-						{
-							if(m[2] == itr->first)
-							{
-								itr->second /= stod(value[1]);
-							}
-						}
-					}
+					divKeyword(m[1], m[2], value);
 				}
 				else if(regex_search(this->text, m, changeKey))
 				{

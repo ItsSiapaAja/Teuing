@@ -1,2 +1,11 @@
-new float abc 1.;
+new integer abb 1;
+
+new float abc 1.5004;
 print float abc;
+
+label a1;
+
+print integer abb;
++ integer abb 1;
+
+goto a1;
