@@ -2,25 +2,25 @@
 
 using namespace std;
 
-void Parse::newKeyword(string type, string id, smatch val)
+void Parse::newKeyword(string text, string type, string id, smatch val)
 {
-	if(type == "text" && regex_search(this->text, val, textVal))
+	if(type == "text" && regex_search(text, val, textVal))
 					{
 						stringStorage.insert(pair<string, string>(id, val[1]));
 					}
-					else if(type == "integer" && regex_search(this->text, val, integerVal))
+					else if(type == "integer" && regex_search(text, val, integerVal))
 					{
 						integerStorage.insert(pair<string, int>(id, stoi(val[1])));
 					}
-					else if(type == "float" && regex_search(this->text, val, floatVal))
+					else if(type == "float" && regex_search(text, val, floatVal))
 					{
 						floatStorage.insert(pair<string, float>(id, stof(val[1])));
 					}
-					else if(type == "double" && regex_search(this->text, val, doubleVal))
+					else if(type == "double" && regex_search(text, val, doubleVal))
 					{
 						doubleStorage.insert(pair<string, double>(id, stod(val[1])));
 					}
-					else if(type == "bool" && regex_search(this->text, val, boolVal))
+					else if(type == "bool" && regex_search(text, val, boolVal))
 					{
 						if(val[1] == "true")
 						{
@@ -33,9 +33,9 @@ void Parse::newKeyword(string type, string id, smatch val)
 					}
 }
 
-void Parse::addKeyword(string type, string id, smatch val)
+void Parse::addKeyword(string text, string type, string id, smatch val)
 {
-	if(type == "text" && regex_search(this->text, val, textVal))
+	if(type == "text" && regex_search(text, val, textVal))
 					{
 						for(auto itr = stringStorage.begin(); itr != stringStorage.end(); ++itr)
 						{
@@ -45,7 +45,7 @@ void Parse::addKeyword(string type, string id, smatch val)
 							}
 						}
 					}
-					else if(type == "integer" && regex_search(this->text, val, integerVal))
+					else if(type == "integer" && regex_search(text, val, integerVal))
 					{
 						for(auto itr = integerStorage.begin(); itr != integerStorage.end(); ++itr)
 						{
@@ -55,7 +55,7 @@ void Parse::addKeyword(string type, string id, smatch val)
 							}
 						}
 					}
-					else if(type == "float" && regex_search(this->text, val, floatVal))
+					else if(type == "float" && regex_search(text, val, floatVal))
 					{
 						for(auto itr = floatStorage.begin(); itr != floatStorage.end(); ++itr)
 						{
@@ -65,7 +65,7 @@ void Parse::addKeyword(string type, string id, smatch val)
 							}
 						}
 					}
-					else if(type == "double" && regex_search(this->text, val, doubleVal))
+					else if(type == "double" && regex_search(text, val, doubleVal))
 					{
 						for(auto itr = doubleStorage.begin(); itr != doubleStorage.end(); ++itr)
 						{
@@ -77,9 +77,9 @@ void Parse::addKeyword(string type, string id, smatch val)
 					}
 }
 
-void Parse::minKeyword(string type, string id, smatch val)
+void Parse::minKeyword(string text, string type, string id, smatch val)
 {
-	if(type == "integer" && regex_search(this->text, val, integerVal))
+	if(type == "integer" && regex_search(text, val, integerVal))
 					{
 						for(auto itr = integerStorage.begin(); itr != integerStorage.end(); ++itr)
 						{
@@ -89,7 +89,7 @@ void Parse::minKeyword(string type, string id, smatch val)
 							}
 						}
 					}
-					else if(type == "float" && regex_search(this->text, val, floatVal))
+					else if(type == "float" && regex_search(text, val, floatVal))
 					{
 						for(auto itr = floatStorage.begin(); itr != floatStorage.end(); ++itr)
 						{
@@ -99,7 +99,7 @@ void Parse::minKeyword(string type, string id, smatch val)
 							}
 						}
 					}
-					else if(type == "double" && regex_search(this->text, val, doubleVal))
+					else if(type == "double" && regex_search(text, val, doubleVal))
 					{
 						for(auto itr = doubleStorage.begin(); itr != doubleStorage.end(); ++itr)
 						{
@@ -111,9 +111,9 @@ void Parse::minKeyword(string type, string id, smatch val)
 					}
 }
 
-void Parse::mulKeyword(string type, string id, smatch val)
+void Parse::mulKeyword(string text, string type, string id, smatch val)
 {
-	if(type == "integer" && regex_search(this->text, val, integerVal))
+	if(type == "integer" && regex_search(text, val, integerVal))
 					{
 						for(auto itr = integerStorage.begin(); itr != integerStorage.end(); ++itr)
 						{
@@ -123,7 +123,7 @@ void Parse::mulKeyword(string type, string id, smatch val)
 							}
 						}
 					}
-					else if(type == "float" && regex_search(this->text, val, floatVal))
+					else if(type == "float" && regex_search(text, val, floatVal))
 					{
 						for(auto itr = floatStorage.begin(); itr != floatStorage.end(); ++itr)
 						{
@@ -133,7 +133,7 @@ void Parse::mulKeyword(string type, string id, smatch val)
 							}
 						}
 					}
-					else if(type == "double" && regex_search(this->text, val, doubleVal))
+					else if(type == "double" && regex_search(text, val, doubleVal))
 					{
 						for(auto itr = doubleStorage.begin(); itr != doubleStorage.end(); ++itr)
 						{
@@ -145,9 +145,9 @@ void Parse::mulKeyword(string type, string id, smatch val)
 					}
 }
 
-void Parse::divKeyword(string type, string id, smatch val)
+void Parse::divKeyword(string text, string type, string id, smatch val)
 {
-	if(type == "integer" && regex_search(this->text, val, integerVal))
+	if(type == "integer" && regex_search(text, val, integerVal))
 					{
 						for(auto itr = integerStorage.begin(); itr != integerStorage.end(); ++itr)
 						{
@@ -157,7 +157,7 @@ void Parse::divKeyword(string type, string id, smatch val)
 							}
 						}
 					}
-					else if(type == "float" && regex_search(this->text, val, floatVal))
+					else if(type == "float" && regex_search(text, val, floatVal))
 					{
 						for(auto itr = floatStorage.begin(); itr != floatStorage.end(); ++itr)
 						{
@@ -167,7 +167,7 @@ void Parse::divKeyword(string type, string id, smatch val)
 							}
 						}
 					}
-					else if(type == "double" && regex_search(this->text, val, doubleVal))
+					else if(type == "double" && regex_search(text, val, doubleVal))
 					{
 						for(auto itr = doubleStorage.begin(); itr != doubleStorage.end(); ++itr)
 						{
@@ -198,27 +198,27 @@ void Parse::start() {
 				label = 0;
 			}
 
-			if(inLoop == 0)
+			if(inLoop == 0 && section == 0)
 			{
 				if(regex_search(this->text, m, newKey))
 				{
-					newKeyword(m[1], m[2], value);
+					newKeyword(this->text, m[1], m[2], value);
 				}
 				else if(regex_search(this->text, m, addKey))
 				{
-					addKeyword(m[1], m[2], value);
+					addKeyword(this->text, m[1], m[2], value);
 				}
 				else if(regex_search(this->text, m, minKey))
 				{
-					minKeyword(m[1], m[2], value);
+					minKeyword(this->text, m[1], m[2], value);
 				}
 				else if(regex_search(this->text, m, mulKey))
 				{
-					mulKeyword(m[1], m[2], value);
+					mulKeyword(this->text, m[1], m[2], value);
 				}
 				else if(regex_search(this->text, m, divKey))
 				{
-					divKeyword(m[1], m[2], value);
+					divKeyword(this->text, m[1], m[2], value);
 				}
 				else if(regex_search(this->text, m, changeKey))
 				{
@@ -492,9 +492,32 @@ void Parse::start() {
 					label = 1;
 					labelName = m[1];
 				}
+				else if(regex_search(this->text, m, sectionKey))
+				{
+					section = 1;
+					sectionName = m[1];
+				}
+				else if(regex_search(this->text, m, useSectionKey))
+				{
+					stringstream strstream(sectionStorage[m[1]]);
+					string textBuffer;
+					while(getline(strstream, textBuffer))
+					{
+						sectionRead(textBuffer);
+					}
+					
+				}
 			}
 			else if(inLoop == 1)
 			{
 				insideLoop(beginLoop, endLoop);
+			}
+			else if(section == 1 && !regex_search(this->text, m, endSectionKey))
+			{
+				sectionStorage[sectionName] += this->text + '\n';
+			}
+			else if(section == 1 && regex_search(this->text, m, endSectionKey))
+			{
+				section = 0;
 			}
 		}

@@ -1,34 +1,49 @@
 #include "parse.h"
 
-using namespace std;
+void Parse::sectionRead(string textSection) {
+			smatch m, value;
 
-void Parse::regularSyntaxGoto(string textGoto) {
-	smatch m, value;
-	if(inLoop == 0)
+			if(!regex_search(textSection, m, gotoKey) && label == 1)
 			{
-				if(regex_search(textGoto, m, newKey))
+				labelStorage[labelName] += textSection + '\n';
+			}
+			else if(regex_search(textSection, m, gotoKey))
+			{
+				stringstream strstream(labelStorage[m[1]]);
+				string textBuffer;
+				while(getline(strstream, textBuffer))
 				{
-					newKeyword(textGoto, m[1], m[2], value);
+					regularSyntaxGoto(textBuffer);
 				}
-				else if(regex_search(textGoto, m, addKey))
+
+				label = 0;
+			}
+
+			if(inLoop == 0)
+			{
+				if(regex_search(textSection, m, newKey))
 				{
-					addKeyword(textGoto, m[1], m[2], value);
+					newKeyword(textSection, m[1], m[2], value);
 				}
-				else if(regex_search(textGoto, m, minKey))
+				else if(regex_search(textSection, m, addKey))
 				{
-					minKeyword(textGoto, m[1], m[2], value);
+					addKeyword(textSection, m[1], m[2], value);
 				}
-				else if(regex_search(textGoto, m, mulKey))
+				else if(regex_search(textSection, m, minKey))
 				{
-					mulKeyword(textGoto, m[1], m[2], value);
+					minKeyword(textSection, m[1], m[2], value);
 				}
-				else if(regex_search(textGoto, m, divKey))
+				else if(regex_search(textSection, m, mulKey))
 				{
-					divKeyword(textGoto, m[1], m[2], value);
+					mulKeyword(textSection, m[1], m[2], value);
 				}
-				else if(regex_search(textGoto, m, changeKey))
+				else if(regex_search(textSection, m, divKey))
 				{
-					if(m[1] == "text" && regex_search(textGoto, value, textVal))
+					divKeyword(textSection, m[1], m[2], value);
+				}
+				else if(regex_search(textSection, m, changeKey))
+				{
+					if(m[1] == "text" && regex_search(textSection, value, textVal))
 					{
 						for(auto itr = stringStorage.begin(); itr != stringStorage.end(); ++itr)
 						{
@@ -38,7 +53,7 @@ void Parse::regularSyntaxGoto(string textGoto) {
 							}
 						}
 					}
-					else if(m[1] == "integer" && regex_search(textGoto, value, integerVal))
+					else if(m[1] == "integer" && regex_search(textSection, value, integerVal))
 					{
 						for(auto itr = integerStorage.begin(); itr != integerStorage.end(); ++itr)
 						{
@@ -48,7 +63,7 @@ void Parse::regularSyntaxGoto(string textGoto) {
 							}
 						}
 					}
-					else if(m[1] == "float" && regex_search(textGoto, value, floatVal))
+					else if(m[1] == "float" && regex_search(textSection, value, floatVal))
 					{
 						for(auto itr = floatStorage.begin(); itr != floatStorage.end(); ++itr)
 						{
@@ -58,7 +73,7 @@ void Parse::regularSyntaxGoto(string textGoto) {
 							}
 						}
 					}
-					else if(m[1] == "double" && regex_search(textGoto, value, doubleVal))
+					else if(m[1] == "double" && regex_search(textSection, value, doubleVal))
 					{
 						for(auto itr = doubleStorage.begin(); itr != doubleStorage.end(); ++itr)
 						{
@@ -68,7 +83,7 @@ void Parse::regularSyntaxGoto(string textGoto) {
 							}
 						}
 					}
-					else if(m[1] == "bool" && regex_search(textGoto, value, boolVal))
+					else if(m[1] == "bool" && regex_search(textSection, value, boolVal))
 					{
 						for(auto itr = boolStorage.begin(); itr != boolStorage.end(); ++itr)
 						{
@@ -83,7 +98,7 @@ void Parse::regularSyntaxGoto(string textGoto) {
 						}
 					}
 				}
-				else if(regex_search(textGoto, m, eraseKey))
+				else if(regex_search(textSection, m, eraseKey))
 				{
 					if(m[1] == "text")
 					{
@@ -106,13 +121,13 @@ void Parse::regularSyntaxGoto(string textGoto) {
 						boolStorage.erase(m[2]);
 					}
 				}
-				else if(regex_search(textGoto, m, loopKey))
+				else if(regex_search(textSection, m, loopKey))
 				{
 					int n = stoi(m[1]);
 					int end = stoi(m[2]);
 					if(n < end)
 					{
-						if(regex_search(textGoto, m, outKey))
+						if(regex_search(textSection, m, outKey))
 						{
 							nStorage["N"] = n;
 							for(; nStorage["N"] <= end; nStorage["N"]++)
@@ -120,7 +135,7 @@ void Parse::regularSyntaxGoto(string textGoto) {
 								cout << nStorage["N"];
 							}
 						}
-						else if(regex_search(textGoto, m, outSpaceKey))
+						else if(regex_search(textSection, m, outSpaceKey))
 						{
 							nStorage["N"] = n;
 							for(; nStorage["N"] <= end; nStorage["N"]++)
@@ -128,7 +143,7 @@ void Parse::regularSyntaxGoto(string textGoto) {
 								cout << nStorage["N"] << " ";
 							}
 						}
-						else if(regex_search(textGoto, m, outLineKey))
+						else if(regex_search(textSection, m, outLineKey))
 						{
 							nStorage["N"] = n;
 							for(; nStorage["N"] <= end; nStorage["N"]++)
@@ -140,7 +155,7 @@ void Parse::regularSyntaxGoto(string textGoto) {
 
 					nStorage.clear();
 				}
-				else if(regex_search(textGoto, m, loopScope))
+				else if(regex_search(textSection, m, loopScope))
 				{
 					beginLoop = stoi(m[1]);
 					endLoop = stoi(m[2]);
@@ -149,7 +164,7 @@ void Parse::regularSyntaxGoto(string textGoto) {
 						inLoop = 1;
 					}
 				}
-				else if(regex_search(textGoto, m, printKey))
+				else if(regex_search(textSection, m, printKey))
 				{
 					if(m[1] == "text")
 					{
@@ -203,7 +218,7 @@ void Parse::regularSyntaxGoto(string textGoto) {
 						}
 					}
 				}
-				else if(regex_search(textGoto, m, printSpaceKey))
+				else if(regex_search(textSection, m, printSpaceKey))
 				{
 					if(m[1] == "text")
 					{
@@ -257,7 +272,7 @@ void Parse::regularSyntaxGoto(string textGoto) {
 						}
 					}
 				}
-				else if(regex_search(textGoto, m, showStorageKey))
+				else if(regex_search(textSection, m, showStorageKey))
 				{
 					cout << "Text : " << endl;
 					for(auto itr = stringStorage.begin(); itr != stringStorage.end(); ++itr)
@@ -292,6 +307,15 @@ void Parse::regularSyntaxGoto(string textGoto) {
 					{
 						cout << itr->first << " : " << itr->second << endl;
 					}
+				}
+				else if(regex_search(textSection, m, labelKey) && label == 0)
+				{
+					label = 1;
+					labelName = m[1];
+				}
+				else if(regex_search(textSection, m, useSectionKey))
+				{
+					sectionRead(sectionStorage[m[1]]);
 				}
 			}
 			else if(inLoop == 1)

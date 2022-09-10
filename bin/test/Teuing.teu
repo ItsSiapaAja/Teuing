@@ -1,11 +1,8 @@
-new integer abb 1;
+_mySection:
 
-new float abc 1.5004;
-print float abc;
+new text axj "Hello World";
+print text axj;
 
-label a1;
+end:
 
-print integer abb;
-+ integer abb 1;
-
-goto a1;
+use _mySection;

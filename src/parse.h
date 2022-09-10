@@ -10,7 +10,7 @@ using namespace std;
 
 #ifndef TEUING_STD
 #define TEUING_STD
-const string version = "Teuing Version 0.0.6-a";
+const string version = "Teuing Version 0.0.6-b1";
 #endif
 
 class Parse
@@ -40,7 +40,10 @@ class Parse
 		regex changeKey{"^change\\s(text|integer|bool|double|float)\\s([a-z]{3})\\s"};
 		regex eraseKey{"^erase\\s(text|integer|bool|double|float)\\s([a-z]{3});$"};
 
-		regex pointerKey{"^\\point\\s(text|integer|bool|double|float)\\s([a-z]{3})\\s([a-z]{3});$"};
+		regex sectionKey{"^(_[a-zA-Z]+)\\:$"};
+		regex endSectionKey{"^end\\:$"};
+		regex useSectionKey{"^use\\s(_[a-zA-Z]+);$"};
+		map<string, string> sectionStorage;
 
 		regex loopKey{"^loop\\srange\\(([0-9]+)\\suntil\\s([0-9]+)\\)\\sin\\sN\\s"};
 		regex outLineKey{"outLine;$"};
@@ -57,6 +60,8 @@ class Parse
 		regex showStorageKey{"^show;$"};
 
 		int label = 0;
+		int section = 0;
+		string sectionName;
 		string labelName;
 
 		int inLoop = 0;
@@ -66,6 +71,7 @@ class Parse
 			this->text = text;
 			stringStorage["spc"] = " ";
 			stringStorage["ver"] = version;
+			stringStorage["psc"] = "_start";
 		}
 
 		~Parse() {
@@ -78,14 +84,15 @@ class Parse
 			this->text = text;
 		}
 
-		void newKeyword(string type, string id, smatch val);
-		void addKeyword(string type, string id, smatch val);
-		void minKeyword(string type, string id, smatch val);
-		void mulKeyword(string type, string id, smatch val);
-		void divKeyword(string type, string id, smatch val);
+		void newKeyword(string text, string type, string id, smatch val);
+		void addKeyword(string text, string type, string id, smatch val);
+		void minKeyword(string text, string type, string id, smatch val);
+		void mulKeyword(string text, string type, string id, smatch val);
+		void divKeyword(string text, string type, string id, smatch val);
 		void chnageKeyword(string type, string id, smatch val);
 		void eraseKeyword(string type, string id);
 
+		void sectionRead(string textSection);
 		void regularSyntaxInBlock(int beginNum);
 		void regularSyntaxGoto(string textGoto);
 

@@ -8,19 +8,19 @@ void Parse::regularSyntaxInBlock(int beginNum) {
 	integerStorage["nnn"] = beginNum;
 	if(regex_search(this->text, m, addKey))
 				{
-					addKeyword(m[1], m[2], value);
+					addKeyword(this->text, m[1], m[2], value);
 				}
 				else if(regex_search(this->text, m, minKey))
 				{
-					minKeyword(m[1], m[2], value);
+					minKeyword(this->text, m[1], m[2], value);
 				}
 				else if(regex_search(this->text, m, mulKey))
 				{
-					mulKeyword(m[1], m[2], value);
+					mulKeyword(this->text, m[1], m[2], value);
 				}
 				else if(regex_search(this->text, m, divKey))
 				{
-					divKeyword(m[1], m[2], value);
+					divKeyword(this->text, m[1], m[2], value);
 				}
 				else if(regex_search(this->text, m, changeKey))
 				{
