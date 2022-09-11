@@ -1,6 +1,6 @@
 /*
 	Teuing Language
-	Version 0.0.6-b1
+	Version 0.0.6-b2
 	Since 2022
 
 	Main file, everything is start here (console), then parse the .teu file into parse.h
@@ -12,11 +12,47 @@
 #include <windows.h>
 #include <cstdlib>
 #include <cstdio>
+#include <cstring>
 #include "parse.h"
 
 using namespace std;
 
 string input, args[100];
+
+void readFile(string fileName)
+{
+	fstream file;
+	string textBuffer;
+	Parse* parse = new Parse();
+
+	if(!fileName.empty())
+	{
+		if(fileName.substr(fileName.find_last_of('.') + 1) == "teu")
+		{
+			file.open(fileName);
+
+			if(!file)
+			{
+				cout << "Cannot open the file" << endl << endl;
+			}
+
+			while(getline(file, textBuffer))
+			{
+				parse->setText(textBuffer);
+				parse->start();
+			}
+
+			cout << endl;
+		}
+		else
+		{
+			cout << "There's no file named as you typed" << endl << endl;
+		}
+	}
+
+	file.close();
+	delete parse;
+}
 
 bool backConsole()
 {
@@ -97,10 +133,31 @@ void console()
 	mainConsole();
 }
 
-int main()
+int main(int argc, char** argv)
 {
-	console();
-	system("cls");
-	system("color 0f");
+	if(argc == 2 && strncmp(argv[1], "--c", 3) == 0)
+	{
+		console();
+		system("cls");
+		system("color 0f");
+	}
+	else if(argc == 3 && strncmp(argv[1], "--r", 3) == 0)
+	{
+		readFile(argv[2]);
+	}
+	else if(argc == 2 && strncmp(argv[1], "--v", 3) == 0)
+	{
+		cout << version << endl;
+		cout << "Created by ItsSiapaAja" << endl;
+	}
+	else
+	{
+		cout << "TEUING INTERPRETER" << endl;
+		cout << "\t[--r][file_name]for running a spesific program" << endl;
+		cout << "\t[--c][-n | -i]  for open a console (-n for the old console, and -i for input console)" << endl;
+		cout << "\t[--v]           for showing a interpreter version" << endl;
+		cout << "\t[--h]           for running a console" << endl;
+	}
+	
 	return 0;
 }

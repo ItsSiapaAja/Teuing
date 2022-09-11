@@ -1,8 +1,8 @@
-_mySection:
+new text abc "Hello World";
+print text abc;
 
-new text axj "Hello World";
-print text axj;
+show;
+delete text;
+show;
 
-end:
-
-use _mySection;
+print text abc;

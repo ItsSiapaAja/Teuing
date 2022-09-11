@@ -10,7 +10,7 @@ using namespace std;
 
 #ifndef TEUING_STD
 #define TEUING_STD
-const string version = "Teuing Version 0.0.6-b1";
+const string version = "Teuing Version 0.0.6-b2";
 #endif
 
 class Parse
@@ -39,6 +39,7 @@ class Parse
 		regex divKey{"^/\\s(integer|double|float)\\s([a-z]{3})\\s"};
 		regex changeKey{"^change\\s(text|integer|bool|double|float)\\s([a-z]{3})\\s"};
 		regex eraseKey{"^erase\\s(text|integer|bool|double|float)\\s([a-z]{3});$"};
+		regex deleteKey{"^delete\\s(text|integer|bool|double|float);$"};
 
 		regex sectionKey{"^(_[a-zA-Z]+)\\:$"};
 		regex endSectionKey{"^end\\:$"};
@@ -89,8 +90,9 @@ class Parse
 		void minKeyword(string text, string type, string id, smatch val);
 		void mulKeyword(string text, string type, string id, smatch val);
 		void divKeyword(string text, string type, string id, smatch val);
-		void chnageKeyword(string type, string id, smatch val);
-		void eraseKeyword(string type, string id);
+		void changeKeyword(string text, string type, string id, smatch val);
+		void eraseKeyword(string text, string type, string id);
+		void deleteKeyword(string text, string type);
 
 		void sectionRead(string textSection);
 		void regularSyntaxInBlock(int beginNum);

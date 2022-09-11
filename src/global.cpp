@@ -179,6 +179,112 @@ void Parse::divKeyword(string text, string type, string id, smatch val)
 					}
 }
 
+void Parse::changeKeyword(string text, string type, string id, smatch val)
+{
+	if(type == "text" && regex_search(text, val, textVal))
+					{
+						for(auto itr = stringStorage.begin(); itr != stringStorage.end(); ++itr)
+						{
+							if(id == itr->first)
+							{
+								itr->second = val[1];
+							}
+						}
+					}
+					else if(type == "integer" && regex_search(text, val, integerVal))
+					{
+						for(auto itr = integerStorage.begin(); itr != integerStorage.end(); ++itr)
+						{
+							if(id == itr->first)
+							{
+								itr->second = stoi(val[1]);
+							}
+						}
+					}
+					else if(type == "float" && regex_search(text, val, floatVal))
+					{
+						for(auto itr = floatStorage.begin(); itr != floatStorage.end(); ++itr)
+						{
+							if(id == itr->first)
+							{
+								itr->second = stof(val[1]);
+							}
+						}
+					}
+					else if(type == "double" && regex_search(text, val, doubleVal))
+					{
+						for(auto itr = doubleStorage.begin(); itr != doubleStorage.end(); ++itr)
+						{
+							if(id == itr->first)
+							{
+								itr->second = stod(val[1]);
+							}
+						}
+					}
+					else if(type == "bool" && regex_search(text, val, boolVal))
+					{
+						for(auto itr = boolStorage.begin(); itr != boolStorage.end(); ++itr)
+						{
+							if(id == itr->first && val[1] == "true")
+							{
+								itr->second = true;
+							}
+							else if(id == itr->first && val[1] == "false")
+							{
+								itr->second = false;
+							}
+						}
+					}
+}
+
+void Parse::eraseKeyword(string text, string type, string id)
+{
+	if(type == "text")
+					{
+						stringStorage.erase(id);
+					}
+					else if(type == "integer")
+					{
+						integerStorage.erase(id);
+					}
+					else if(type == "float")
+					{
+						floatStorage.erase(id);
+					}
+					else if(type == "double")
+					{
+						doubleStorage.erase(id);
+					}
+					else if(type == "bool")
+					{
+						boolStorage.erase(id);
+					}
+}
+
+void Parse::deleteKeyword(string text, string type)
+{
+	if(type == "text")
+	{
+		stringStorage.clear();
+	}
+	else if(type == "integer")
+	{
+		integerStorage.clear();
+	}
+	else if(type == "float")
+	{
+		floatStorage.clear();
+	}
+	else if(type == "double")
+	{
+		doubleStorage.clear();
+	}
+	else if(type == "bool")
+	{
+		boolStorage.clear();
+	}
+}
+
 void Parse::start() {
 			smatch m, value;
 
@@ -222,83 +328,15 @@ void Parse::start() {
 				}
 				else if(regex_search(this->text, m, changeKey))
 				{
-					if(m[1] == "text" && regex_search(this->text, value, textVal))
-					{
-						for(auto itr = stringStorage.begin(); itr != stringStorage.end(); ++itr)
-						{
-							if(m[2] == itr->first)
-							{
-								itr->second = value[1];
-							}
-						}
-					}
-					else if(m[1] == "integer" && regex_search(this->text, value, integerVal))
-					{
-						for(auto itr = integerStorage.begin(); itr != integerStorage.end(); ++itr)
-						{
-							if(m[2] == itr->first)
-							{
-								itr->second = stoi(value[1]);
-							}
-						}
-					}
-					else if(m[1] == "float" && regex_search(this->text, value, floatVal))
-					{
-						for(auto itr = floatStorage.begin(); itr != floatStorage.end(); ++itr)
-						{
-							if(m[2] == itr->first)
-							{
-								itr->second = stof(value[1]);
-							}
-						}
-					}
-					else if(m[1] == "double" && regex_search(this->text, value, doubleVal))
-					{
-						for(auto itr = doubleStorage.begin(); itr != doubleStorage.end(); ++itr)
-						{
-							if(m[2] == itr->first)
-							{
-								itr->second = stod(value[1]);
-							}
-						}
-					}
-					else if(m[1] == "bool" && regex_search(this->text, value, boolVal))
-					{
-						for(auto itr = boolStorage.begin(); itr != boolStorage.end(); ++itr)
-						{
-							if(m[2] == itr->first && value[1] == "true")
-							{
-								itr->second = true;
-							}
-							else if(m[2] == itr->first && value[1] == "false")
-							{
-								itr->second = false;
-							}
-						}
-					}
+					changeKeyword(this->text, m[1], m[2], value);
 				}
 				else if(regex_search(this->text, m, eraseKey))
 				{
-					if(m[1] == "text")
-					{
-						stringStorage.erase(m[2]);
-					}
-					else if(m[1] == "integer")
-					{
-						integerStorage.erase(m[2]);
-					}
-					else if(m[1] == "float")
-					{
-						floatStorage.erase(m[2]);
-					}
-					else if(m[1] == "double")
-					{
-						doubleStorage.erase(m[2]);
-					}
-					else if(m[1] == "bool")
-					{
-						boolStorage.erase(m[2]);
-					}
+					eraseKeyword(this->text, m[1], m[2]);
+				}
+				else if(regex_search(this->text, m, deleteKey))
+				{
+					deleteKeyword(this->text, m[1]);
 				}
 				else if(regex_search(this->text, m, loopKey))
 				{
