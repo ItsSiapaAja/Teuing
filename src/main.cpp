@@ -1,6 +1,6 @@
 /*
 	Teuing Language
-	Version 0.0.6-b2
+	Version 0.0.6
 	Since 2022
 
 	Main file, everything is start here (console), then parse the .teu file into parse.h

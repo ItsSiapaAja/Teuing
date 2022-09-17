@@ -1,16 +1,10 @@
 # Teuing : Fun Programming Language
 ## Run a Program
-You can download the source code and the executable too in the Releases. After download it, run the executable file at bin folder and just write this at the shell (the shell is inside the `bin` folder, just open `Teuing.exe`) : 
+You can download the source code and the executable too in the Releases. After download it, you can put the bin directory in a PATH, then run this command at your shell :
 ```
-[1] >> run
-[2] >> "yourfilename".teu
+Teuing --r (yourfilename).teu
 ```
-The file extentions are `.teu`. For the exit command just follow you can write it too like this : 
-```
-[1] >> exit
-[2] >> yes
-```
-then it will be showing a "Goodbye" text for a second.
+Then it will run your `.teu` program.
 ## What's New In 0.0.5?
 - New datatype (`float`, `double`)
 ## "Hello World" Program
@@ -22,7 +16,7 @@ print text abc;
 This line `new text abc "Hello World;` is for making a new data with a name "abc" and having a text type, and `print text abc;` is for print a data named "abc" with a text type. Every data is saved in different type, so you can actually having a same data name but the types are must be different.
 ## Data Type
 There are a 3 different data type (and remember, every different data type has its own storage), the data types are `text`, `integer`, `bool`, `float`, and `double`.
-## Data Manipulate
+## Data Modifier
 | Keyword | Description                                                     |
 |---------|-----------------------------------------------------------------|
 |`new`    |Making a new data                                                |
@@ -32,6 +26,7 @@ There are a 3 different data type (and remember, every different data type has i
 |`/`      |Divide an integer data                                           |
 |`change` |Change a value of data                                           |
 |`erase`  |Erase a data                                                     |
+|`delete` |For clearing all data in specified type                          |
 
 Example code :
 
@@ -68,6 +63,9 @@ print text abc;
 
 - Erase a data
 erase text abc;
+
+- Delete a data
+delete text;
 ```
 We dont use a normal evaluation.
 ## Loop
@@ -104,6 +102,8 @@ The other keyword is for outputing something, for example is `print`, `printspac
 print text abc;
 show;
 ```
+## Section
+The `section` is on development, so it must be a lot of bugs (will be updated at 0.0.7)
 ## Using a Semicolon!
 Dont forget to use a semicolon in end of line;
 ## There's No Error!

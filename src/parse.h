@@ -10,7 +10,7 @@ using namespace std;
 
 #ifndef TEUING_STD
 #define TEUING_STD
-const string version = "Teuing Version 0.0.6-b2";
+const string version = "Teuing Version 0.0.6";
 #endif
 
 class Parse
