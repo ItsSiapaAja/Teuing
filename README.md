@@ -5,8 +5,10 @@ You can download the source code and the executable too in the Releases. After d
 Teuing --r (yourfilename).teu
 ```
 Then it will run your `.teu` program.
-## What's New In 0.0.5?
-- New datatype (`float`, `double`)
+## What's New In 0.0.6?
+- `delete` keyword
+- `section`
+- Change the way the program runs
 ## "Hello World" Program
 For making a Hello World program, you just need a 2 line of code : 
 ```
